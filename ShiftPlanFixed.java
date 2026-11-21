@@ -72,8 +72,8 @@ public class ShiftPlanFixed {
 
         List<Brigade> filteredBrigades = new ArrayList<>();
         for (Brigade brigade : brigades) {
-            boolean isOverworked = brigade.hoursPerShift > MAX_SHIFT_HOURS + EPSILON;
-            if (isOverworked || !brigade.admitted) {
+            boolean isOverworked = brigade.getHoursPerShift() > MAX_SHIFT_HOURS + EPSILON;
+            if (isOverworked || !brigade.isAdmitted()) {
                 continue;
             }
             filteredBrigades.add(brigade);
@@ -86,7 +86,7 @@ public class ShiftPlanFixed {
 
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < requiredBrigadesCount; i++) {
-            result.append(filteredBrigades.get(i).lastName).append("; ");
+            result.append(filteredBrigades.get(i).getLastName()).append("; ");
         }
         return result.toString();
     }
@@ -124,4 +124,9 @@ class Brigade {
         this.hoursPerShift = hoursPerShift;
         this.admitted = admitted;
     }
+
+    // Геттеры для доступа к приватным полям
+    public String getLastName() { return lastName; }
+    public double getHoursPerShift() { return hoursPerShift; }
+    public boolean isAdmitted() { return admitted; }
 }
